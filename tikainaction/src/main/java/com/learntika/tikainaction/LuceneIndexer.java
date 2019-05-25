@@ -1,11 +1,17 @@
 package com.learntika.tikainaction;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.store.SimpleFSDirectory;
 import org.apache.tika.Tika;
 
 public class LuceneIndexer {
@@ -30,7 +36,22 @@ public class LuceneIndexer {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		Path path = Paths.get("E:\\luceneindex");
+		IndexWriterConfig indexWriterConfig = new IndexWriterConfig(new StandardAnalyzer());
+		IndexWriter writer = null;
+		try {
+			writer = new IndexWriter(new SimpleFSDirectory(path), indexWriterConfig);
+			LuceneIndexer luceneIndexer = new LuceneIndexer(new Tika(), writer);
+			luceneIndexer.indexDocument(new File(args[0]));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 	}
 
