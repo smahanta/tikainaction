@@ -7,7 +7,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
 		<tika.groupId>org.apache.tika</tika.groupId>
-		<tika.version>1.21</tika.version>
+		<tika.version>1.22</tika.version>
 		<slf4j.version>1.7.26</slf4j.version>
 	</properties>
 	<dependencies>
